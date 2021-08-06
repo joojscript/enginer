@@ -1,0 +1,26 @@
+{
+  "name": "voodoo",
+  "version": "0.0.1",
+  "description": "An utility js/ts library to make Javscript conccurent",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "build": "babel src --out-dir dist --no-copy-ignored",
+    "dev": "nodemon --watch 'src/' --exec 'ts-node src/index.ts' -e ts",
+    "test": "jest"
+  },
+  "author": "João Augusto Perin de Souza",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.3.5",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/node": "^16.4.13",
+    "eslint": "^7.32.0",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.1.0"
+  }
+}
