@@ -1,32 +1,42 @@
-const { isMainThread, parentPort, workerData } = require("worker_threads");
-const Pool = require("worker-threads-pool");
-const CPUs = require("os").cpus().length;
-const pool = new Pool({ max: CPUs });
+import { isMainThread, parentPort, workerData } from "worker_threads";
+import WTPool from "worker-threads-pool";
+import { cpus } from "os";
+import { Worker } from "./worker";
+const availableCPUs = cpus().length;
 
-const runFibonacci = (workerData) => {
-  return new Promise((resolve, reject) => {
-    pool.acquire(__filename, { workerData }, (err, worker) => {
-      if (err) reject(err);
-      console.log(`started worker ${worker} (pool size: ${pool.size})`);
-      worker.on("message", resolve);
-      worker.on("error", reject);
-      worker.on("exit", (code) => {
-        if (code !== 0)
-          reject(new Error(`Worker stopped with exit code ${code}`));
-      });
-    });
-  });
+type PoolOptions = {
+  workers: Worker[];
 };
 
-/**
- * If it's not the main thread it's one of the Worker threads
- */
-if (!isMainThread) {
-  const result = fb.iterate(workerData.iterations);
-  /**
-   * Send a copy the result object back to the main Thread
-   */
-  parentPort.postMessage(result);
-}
+export class Pool {
+  workers: Worker[] = [];
+  private instance = new WTPool({ max: availableCPUs });
 
-module.exports = runFibonacci;
+  constructor(options: PoolOptions) {
+    this.workers = options.workers;
+
+    this.workers = this.workers.map((worker) => {
+      worker.inThread = true;
+      return worker;
+    });
+
+    for (const worker of this.workers) {
+      this.instance.acquire(
+        worker.__tmpFilePath,
+        worker.workerData,
+        (err, wk) => {
+          if (err) {
+            throw new Error(`An error occurred while trying to build Pool`);
+          }
+          wk.on("message", (msg: any) => worker.onWorkerMessage(msg));
+          wk.on("error", (err: Error) => worker.onWorkerError(err));
+          wk.on("exit", (code: number) => worker.onWorkerExit(code));
+        }
+      );
+
+      console.log(
+        `Started worker ${worker} (pool size: ${this.instance.size})`
+      );
+    }
+  }
+}

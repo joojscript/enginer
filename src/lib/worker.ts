@@ -17,6 +17,8 @@ const defaultExit = (code: number) => {
 };
 
 type WorkerOptions = {
+  filepath: string;
+  inThread?: boolean;
   workerData?: any;
   onWorkerMessage?: (value: any) => void;
   onWorkerError?: (error: Error) => void;
@@ -24,33 +26,67 @@ type WorkerOptions = {
 };
 
 export class Worker {
-  worker: NodeWorker;
+  __tmpFilePath: string;
+  inThread = true;
+  worker?: NodeWorker;
+  originalFilePath: string;
+  workerData: any = {};
 
-  onWorkerMessage?: (value: any) => void;
-  onWorkerError?: (error: Error) => void;
-  onWorkerExit?: (code: number) => void;
+  onWorkerMessage: (value: any) => void;
+  onWorkerError: (error: Error) => void;
+  onWorkerExit: (code: number) => void;
 
-  constructor(filepath: string, options?: WorkerOptions) {
+  constructor(options: WorkerOptions) {
+    this.originalFilePath = options.filepath;
+    this.workerData = options.workerData;
+
+    if (options.inThread !== undefined && options.inThread !== null) {
+      this.inThread = options.inThread;
+    }
+
     const tmpFileIdentifier = `${randomBytes(4).readUInt32LE(0)}`;
-    const tmpFilePath = this._buildTempFile(filepath, tmpFileIdentifier);
+    const tmpFilePath = this._buildTempFile(
+      options.filepath,
+      tmpFileIdentifier
+    );
+    this.__tmpFilePath = tmpFilePath;
 
-    this.worker = new NodeWorker(tmpFilePath, {
+    this.onWorkerMessage = options?.onWorkerMessage || defaultMessage;
+    this.onWorkerError = (err: Error) => {
+      (options?.onWorkerError || defaultError)(err);
+      hookDeleteFile(tmpFilePath);
+    };
+    this.onWorkerExit = (code: number) => {
+      (options?.onWorkerExit || defaultExit)(code);
+      hookDeleteFile(tmpFilePath);
+    };
+
+    if (!this.inThread) {
+      this.worker = new NodeWorker(tmpFilePath, {
+        ...workerData,
+        ...options?.workerData,
+      });
+
+      this.worker.on("message", this.onWorkerMessage);
+      this.worker.on("error", this.onWorkerError);
+      this.worker.on("exit", this.onWorkerExit);
+    }
+  }
+
+  run() {
+    if (this.inThread === false) {
+      console.warn(
+        `This Worker has 'inThread' set to true, which means it automatically runs when it is initialized. Calling '.run()' will probably make it execute twice.`
+      );
+    }
+    this.worker = new NodeWorker(this.__tmpFilePath, {
       ...workerData,
-      ...options?.workerData,
+      ...this.workerData,
     });
-    this.onWorkerMessage = options?.onWorkerMessage;
-    this.onWorkerError = options?.onWorkerError;
-    this.onWorkerExit = options?.onWorkerExit;
 
-    this.worker.on("message", this.onWorkerMessage || defaultMessage);
-    this.worker.on("error", (err) => {
-      (this.onWorkerError || defaultError)(err);
-      hookDeleteFile(tmpFilePath);
-    });
-    this.worker.on("exit", (code) => {
-      (this.onWorkerExit || defaultExit)(code);
-      hookDeleteFile(tmpFilePath);
-    });
+    this.worker.on("message", this.onWorkerMessage);
+    this.worker.on("error", this.onWorkerError);
+    this.worker.on("exit", this.onWorkerExit);
   }
 
   private _buildTempFile(filepath: string, fileId: string) {
