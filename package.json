@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "build": "babel src --out-dir dist --no-copy-ignored",
-    "dev": "nodemon --watch 'src/' --exec 'ts-node src/index.ts' -e ts",
+    "dev": "nodemon --watch 'src/' --exec \"ts-node src/index.ts\" -e ts",
     "test": "jest"
   },
   "author": "João Augusto Perin de Souza",
