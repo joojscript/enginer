@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://github.com/joojscript/voodoo/blob/master/.github/logo.png?raw=true" /> <br />
+  <img src="https://github.com/joojscript/voodoo/blob/master/.github/assets/logo.png?raw=true" height="200" /> <br />
   Voodoo
 </h1>
 
