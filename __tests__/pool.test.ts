@@ -11,10 +11,6 @@ describe("Pool tests: ", () => {
     clearTmp();
   });
 
-  afterAll(() => {
-    clearTmp();
-  });
-
   test("Create a pool with 4 threads to print 'Hello World'", () => {
     console.log = jest.fn();
 

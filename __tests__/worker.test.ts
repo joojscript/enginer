@@ -11,10 +11,6 @@ describe("Worker tests: ", () => {
     clearTmp();
   });
 
-  afterAll(() => {
-    clearTmp();
-  });
-
   test("Create a worker to print 'Hello World'", () => {
     new Worker({
       filepath,
