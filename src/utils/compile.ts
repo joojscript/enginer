@@ -24,6 +24,10 @@ export const compileFromPath = (
   path: string,
   options?: ts.TranspileOptions
 ) => {
-  const fileContent = readFileSync(path).toString();
-  return compile(fileContent, options);
+  try {
+    const fileContent = readFileSync(path).toString();
+    return compile(fileContent, options);
+  } catch {
+    return "";
+  }
 };
