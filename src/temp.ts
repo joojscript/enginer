@@ -3,10 +3,16 @@ type ReponseType = {
   description: string;
 };
 
-const print = (title: string, description: string) => {
-  console.log("Hello World!");
+const print = () => {
+  const seed = Math.random() * 10;
+  setTimeout(() => {
+    console.log(
+      new Date().toLocaleTimeString(),
+      `FINISHED WITH SEED: ${seed.toFixed(2)}`
+    );
+  }, seed * 1000);
 };
 
-print("", "");
+print();
 
 export default print;
