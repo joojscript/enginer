@@ -43,7 +43,7 @@ export class Pool {
       );
 
       console.log(
-        `Started worker ${worker} (pool size: ${this.instance.size})`
+        `Started worker ${worker.id} (pool size: ${this.instance.size})`
       );
     }
   }

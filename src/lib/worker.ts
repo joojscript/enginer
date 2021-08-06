@@ -3,6 +3,7 @@ import { writeFileSync, unlinkSync } from "fs";
 import { resolve } from "path";
 import { Worker as NodeWorker, workerData } from "worker_threads";
 import { compileFromPath } from "../utils/compile";
+import uuid from "../utils/uuid";
 
 const defaultMessage = (message: any) => {
   return message;
@@ -27,6 +28,7 @@ type WorkerOptions = {
 
 export class Worker {
   __tmpFilePath: string;
+  id: string;
   inThread = true;
   worker?: NodeWorker;
   originalFilePath: string;
@@ -37,6 +39,8 @@ export class Worker {
   onWorkerExit: (code: number) => void;
 
   constructor(options: WorkerOptions) {
+    this.id = uuid();
+
     this.originalFilePath = options.filepath;
     this.workerData = options.workerData;
 

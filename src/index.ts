@@ -17,5 +17,16 @@ const filepath = resolve(__dirname, "temp.ts");
 // new Worker({ filepath });
 
 new Pool({
-  workers: [new Worker({ filepath }), new Worker({ filepath })],
+  max: 4,
+  workers: [
+    new Worker({ filepath }),
+    new Worker({ filepath }),
+    new Worker({ filepath }),
+    new Worker({ filepath }),
+    new Worker({ filepath }),
+    new Worker({ filepath }),
+    new Worker({ filepath }),
+    new Worker({ filepath }),
+    new Worker({ filepath }),
+  ],
 });
