@@ -6,13 +6,21 @@ const availableCPUs = cpus().length;
 
 type PoolOptions = {
   workers: Worker[];
+  max?: number;
 };
 
 export class Pool {
   workers: Worker[] = [];
-  private instance = new WTPool({ max: availableCPUs });
+  private instance: WTPool;
 
   constructor(options: PoolOptions) {
+    this.instance = new WTPool({
+      max:
+        options.max && options.max < availableCPUs
+          ? options.max
+          : availableCPUs,
+    });
+
     this.workers = options.workers;
 
     this.workers = this.workers.map((worker) => {
