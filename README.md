@@ -1,6 +1,6 @@
 <h1 align="center">
-  <img src="https://github.com/joojscript/voodoo/blob/master/.github/assets/logo.png?raw=true" height="200" /> <br />
-  Voodoo
+  <img src="https://github.com/joojscript/enginer/blob/master/.github/assets/logo.png?raw=true" height="200" /> <br />
+  Enginer
 </h1>
 
 An utility js/ts library to make Javscript conccurent!
