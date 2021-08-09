@@ -12,8 +12,8 @@
     "threads",
     "pool"
   ],
-  "main": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "main": "dist/index",
+  "typings": "dist/index",
   "scripts": {
     "start": "node dist/app.js",
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
