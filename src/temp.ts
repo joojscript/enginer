@@ -1,3 +1,4 @@
+// @ts-ignore
 type ReponseType = {
   title: string;
   description: string;

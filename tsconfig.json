@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
+    "outDir": "./dist",
     "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "node",
@@ -25,5 +25,6 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext"
-  }
+  },
+  "exclude": ["node_modules", "tests", "example"]
 }

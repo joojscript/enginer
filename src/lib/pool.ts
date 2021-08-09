@@ -1,7 +1,6 @@
-import { isMainThread, parentPort, workerData } from "worker_threads";
 import WTPool from "worker-threads-pool";
 import { cpus } from "os";
-import { Worker } from "./worker";
+import type { Worker } from "./worker";
 const availableCPUs = cpus().length;
 
 type PoolOptions = {
