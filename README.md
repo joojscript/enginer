@@ -11,6 +11,18 @@ While trying to make high-scalable and performant systems, I end up being in con
 
 I end up trying some work arounds, but, as a developer that likes a lot concurrency, I decided to make my own implementation. So here it is! Hope it helps! :)
 
+## Installation
+
+```shell
+npm install enginer
+```
+
+or
+
+```shell
+yarn add enginer
+```
+
 ## Usage
 
 ### Single Worker
@@ -41,3 +53,11 @@ new Pool({
   ],
 });
 ```
+
+## ToDo
+
+- 🕐 Support commands as well as files/scripts.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
