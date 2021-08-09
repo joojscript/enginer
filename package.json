@@ -2,15 +2,36 @@
   "name": "enginer",
   "version": "0.0.1",
   "description": "An utility js/ts library to make Javscript conccurent",
-  "main": "index.js",
+  "author": "João Augusto Perin de Souza <joaoaugustoperin@gmail.com> (https://github.com/joojscript)",
+  "license": "MIT",
+  "keywords": [
+    "concurrency",
+    "javascript",
+    "typescript",
+    "worker",
+    "threads",
+    "pool"
+  ],
+  "main": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "start": "node dist/app.js",
     "build": "babel src --out-dir dist --no-copy-ignored",
     "dev": "nodemon -r tsconfig-paths/register --watch 'src/' --exec \"ts-node src/index.ts\" -e ts",
     "test": "jest"
   },
-  "author": "João Augusto Perin de Souza",
-  "license": "MIT",
+  "source": "src/index",
+  "files": [
+    "dist/"
+  ],
+  "repository": "https://github.com/joojscript/enginer",
+  "bugs": {
+    "url": "https://github.com/joojscript/enginer/issues"
+  },
+  "homepage": "https://github.com/joojscript/enginer#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",

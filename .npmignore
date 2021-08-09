@@ -1,0 +1,5 @@
+src/*
+node_modules/*
+example/*
+.github/*
+__tests__/*
