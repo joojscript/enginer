@@ -1,6 +1,6 @@
 {
   "name": "enginer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An utility js/ts library to make Javscript conccurent",
   "author": "João Augusto Perin de Souza <joaoaugustoperin@gmail.com> (https://github.com/joojscript)",
   "license": "MIT",
