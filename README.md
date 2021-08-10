@@ -23,6 +23,8 @@ or
 yarn add enginer
 ```
 
+⚠ **warning**: Typescript is **not** a required dependecy, as this library works without it. But if your code is in ts, you need to have it installed. 
+
 ## Usage
 
 ### Single Worker
