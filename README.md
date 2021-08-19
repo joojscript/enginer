@@ -3,7 +3,7 @@
   Enginer
 </h1>
 
-An utility js/ts library to make Javscript conccurent!
+An utility js/ts library to make Javacript conccurent!
 
 ## Motivation
 
